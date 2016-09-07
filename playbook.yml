@@ -60,7 +60,7 @@
       config: manual
       bond-master: fabric
       bond-primary: "{{ fabric_primary_iface }}"
-      force: true
+      #force: true
       description: "Primary fabric interface"
 
   - name: Ensure Fabric Interfaces
@@ -72,7 +72,7 @@
       name: "{{ hostvars[inventory_hostname]['ansible_' + item]['device'] }}"
       config: manual
       bond-master: fabric
-      force: true
+      #force: true
       description: "Fabric interface"
     when: item != fabric_primary_iface
     with_items:
@@ -87,7 +87,7 @@
       config: "dhcp"
       auto: true
       bridge_ports: "{{ nonfabric_iface_list | join(' ')  }}"
-      force: true
+      #force: true
       description: "Internal POD management interface"
     when: management_ip is not defined or management_ip == "dhcp"
 
@@ -102,7 +102,7 @@
       gateway: "{{ management_gw | default(omit) }}"
       broadcast: "{{ management_bc | default(omit) }}"
       bridge_ports: "{{ nonfabric_iface_list | join(' ')  }}"
-      force: true
+      #force: true
       description: "Internal POD management interface"
     when: management_ip is defined and management_ip != "dhcp"
 
@@ -114,7 +114,7 @@
       auto: true
       name: "{{ hostvars[inventory_hostname]['ansible_' + item]['device'] }}"
       config: manual
-      force: true
+      #force: true
       description: "Management interface"
     with_items:
       - "{{ nonfabric_iface_list | sort }}"
@@ -127,7 +127,7 @@
       auto: true
       name: "{{ external_iface }}"
       config: dhcp
-      force: true
+      #force: true
       description: "External interface from POD to Internet (uplink)"
     when: external_iface is defined and ( external_ip is not defined or external_ip == "dhcp" )
 
@@ -142,7 +142,7 @@
       address: "{{ external_ip }}"
       gateway: "{{ external_gw | default(omit) }}"
       broadcast: "{{ external_bc | default(omit) }}"
-      force: true
+      #force: true
       description: "External interface from POD to Internet (uplink)"
     when: external_iface is defined and external_ip is defined and external_ip != "dhcp"
 

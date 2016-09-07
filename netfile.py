@@ -275,7 +275,7 @@ elif state == "absent" and name in ifaces.keys():
 
 # Only write the output file if something has changed or if the
 # task requests a forced write.
-if force or change_type != 0:
+if force or result["changed"] or change_type != 0:
 	file = open(dest_file, "w+")
 	write(file, ifaces)
 	file.close()
